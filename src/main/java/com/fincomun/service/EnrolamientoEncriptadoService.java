@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.fincomun.model.TokenModel;
 import com.fincomun.model.ClienteModel;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import javax.crypto.spec.IvParameterSpec;
 import org.springframework.http.HttpStatus;
 import com.fincomun.model.ResultadoIneModel;
@@ -64,6 +65,11 @@ public class EnrolamientoEncriptadoService {
             return new ResponseEntity(ValidacionesUtilities.encriptar_respuesta(new JSONObject(respuesta).toString()), HttpStatus.OK);
 
         }
+
+        log.info("SOLICITUD ENCRIPTADA");
+        log.info(solicitud);
+        log.info("");
+        log.info("");
 
         ValidarInformacionModel peticion = solicitud_validar_informacion(solicitud);
 
@@ -478,6 +484,11 @@ public class EnrolamientoEncriptadoService {
 
         }
 
+        log.info("SOLICITUD ENCRIPTADA");
+        log.info(solicitud);
+        log.info("");
+        log.info("");
+
         AvisoContratoModel peticion = solicitud_aviso_contrato(solicitud);
 
         if (Objects.isNull(peticion)) {
@@ -762,6 +773,11 @@ public class EnrolamientoEncriptadoService {
             return new ResponseEntity(ValidacionesUtilities.encriptar_respuesta(new JSONObject(respuesta).toString()), HttpStatus.OK);
 
         }
+
+        log.info("SOLICITUD ENCRIPTADA");
+        log.info(solicitud);
+        log.info("");
+        log.info("");
 
         RegistrarBitacoraModel peticion = solicitud_registrar_bitacora(solicitud);
 
@@ -1091,6 +1107,11 @@ public class EnrolamientoEncriptadoService {
             return new ResponseEntity(ValidacionesUtilities.encriptar_respuesta(new JSONObject(respuesta).toString()), HttpStatus.OK);
 
         }
+
+        log.info("SOLICITUD ENCRIPTADA");
+        log.info(solicitud);
+        log.info("");
+        log.info("");
 
         ValidarDatosCurpModel peticion = solicitud_validar_datos_curp(solicitud);
 
@@ -1853,7 +1874,10 @@ public class EnrolamientoEncriptadoService {
 
             }
 
-            servicios.servicio_enviar_mensaje(PropiedadesUtilities.Variables.VALOR_VALIDACION_CAMPO_GENERO, peticion.getTelefono_celular().trim());
+            String mensaje = PropiedadesUtilities.Variables.VALOR_VALIDACION_CAMPO_GENERO;
+            mensaje = new String(mensaje.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+            servicios.servicio_enviar_mensaje(mensaje, peticion.getTelefono_celular().trim());
 
             resultado.put("codigo", 122);
             resultado.put("descripcion", "Género del cliente inconsistente.");
@@ -1990,6 +2014,11 @@ public class EnrolamientoEncriptadoService {
             return new ResponseEntity(ValidacionesUtilities.encriptar_respuesta(new JSONObject(respuesta).toString()), HttpStatus.OK);
 
         }
+
+        log.info("SOLICITUD ENCRIPTADA");
+        log.info(solicitud);
+        log.info("");
+        log.info("");
 
         BitacoraIncodeModel peticion = solicitud_bitacora_incode(solicitud);
 
@@ -2445,6 +2474,11 @@ public class EnrolamientoEncriptadoService {
             return new ResponseEntity(ValidacionesUtilities.encriptar_respuesta(new JSONObject(respuesta).toString()), HttpStatus.OK);
 
         }
+
+        log.info("SOLICITUD ENCRIPTADA");
+        log.info(solicitud);
+        log.info("");
+        log.info("");
 
         ValidarDatosIneModel peticion = solicitud_validar_datos_ine(solicitud);
 
@@ -2947,14 +2981,16 @@ public class EnrolamientoEncriptadoService {
         try {
 
             Cipher cifrar = Cipher.getInstance(PropiedadesUtilities.Encriptacion.VALOR_TIPO_CIFRADO);
-            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
-            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes());
+            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(StandardCharsets.UTF_8), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
+            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes(StandardCharsets.UTF_8));
 
-            byte[] decodificar = Base64.decode(peticion.getBytes());
+            byte[] decodificar = Base64.decode(peticion.getBytes(StandardCharsets.UTF_8));
             cifrar.init(Cipher.DECRYPT_MODE, especificaciones, parametro);
 
             byte[] descifrar = cifrar.doFinal(decodificar);
-            String resultado = new String(descifrar);
+            String resultado = new String(descifrar, StandardCharsets.UTF_8);
+
+            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, ValidarDatosIneModel.class);
@@ -2978,14 +3014,16 @@ public class EnrolamientoEncriptadoService {
         try {
 
             Cipher cifrar = Cipher.getInstance(PropiedadesUtilities.Encriptacion.VALOR_TIPO_CIFRADO);
-            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
-            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes());
+            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(StandardCharsets.UTF_8), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
+            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes(StandardCharsets.UTF_8));
 
-            byte[] decodificar = Base64.decode(peticion.getBytes());
+            byte[] decodificar = Base64.decode(peticion.getBytes(StandardCharsets.UTF_8));
             cifrar.init(Cipher.DECRYPT_MODE, especificaciones, parametro);
 
             byte[] descifrar = cifrar.doFinal(decodificar);
-            String resultado = new String(descifrar);
+            String resultado = new String(descifrar, StandardCharsets.UTF_8);
+
+            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, ValidarDatosCurpModel.class);
@@ -3009,14 +3047,16 @@ public class EnrolamientoEncriptadoService {
         try {
 
             Cipher cifrar = Cipher.getInstance(PropiedadesUtilities.Encriptacion.VALOR_TIPO_CIFRADO);
-            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
-            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes());
+            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(StandardCharsets.UTF_8), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
+            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes(StandardCharsets.UTF_8));
 
-            byte[] decodificar = Base64.decode(peticion.getBytes());
+            byte[] decodificar = Base64.decode(peticion.getBytes(StandardCharsets.UTF_8));
             cifrar.init(Cipher.DECRYPT_MODE, especificaciones, parametro);
 
             byte[] descifrar = cifrar.doFinal(decodificar);
-            String resultado = new String(descifrar);
+            String resultado = new String(descifrar, StandardCharsets.UTF_8);
+
+            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, RegistrarBitacoraModel.class);
@@ -3040,14 +3080,16 @@ public class EnrolamientoEncriptadoService {
         try {
 
             Cipher cifrar = Cipher.getInstance(PropiedadesUtilities.Encriptacion.VALOR_TIPO_CIFRADO);
-            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
-            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes());
+            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(StandardCharsets.UTF_8), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
+            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes(StandardCharsets.UTF_8));
 
-            byte[] decodificar = Base64.decode(peticion.getBytes());
+            byte[] decodificar = Base64.decode(peticion.getBytes(StandardCharsets.UTF_8));
             cifrar.init(Cipher.DECRYPT_MODE, especificaciones, parametro);
 
             byte[] descifrar = cifrar.doFinal(decodificar);
-            String resultado = new String(descifrar);
+            String resultado = new String(descifrar, StandardCharsets.UTF_8);
+
+            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, BitacoraIncodeModel.class);
@@ -3071,14 +3113,16 @@ public class EnrolamientoEncriptadoService {
         try {
 
             Cipher cifrar = Cipher.getInstance(PropiedadesUtilities.Encriptacion.VALOR_TIPO_CIFRADO);
-            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
-            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes());
+            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(StandardCharsets.UTF_8), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
+            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes(StandardCharsets.UTF_8));
 
-            byte[] decodificar = Base64.decode(peticion.getBytes());
+            byte[] decodificar = Base64.decode(peticion.getBytes(StandardCharsets.UTF_8));
             cifrar.init(Cipher.DECRYPT_MODE, especificaciones, parametro);
 
             byte[] descifrar = cifrar.doFinal(decodificar);
-            String resultado = new String(descifrar);
+            String resultado = new String(descifrar, StandardCharsets.UTF_8);
+
+            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, AvisoContratoModel.class);
@@ -3102,14 +3146,16 @@ public class EnrolamientoEncriptadoService {
         try {
 
             Cipher cifrar = Cipher.getInstance(PropiedadesUtilities.Encriptacion.VALOR_TIPO_CIFRADO);
-            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
-            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes());
+            SecretKeySpec especificaciones = new SecretKeySpec(PropiedadesUtilities.Encriptacion.VALOR_CLAVE_ESPECIFICA.getBytes(StandardCharsets.UTF_8), PropiedadesUtilities.Encriptacion.VALOR_TIPO_ALGORITMO);
+            IvParameterSpec parametro = new IvParameterSpec(PropiedadesUtilities.Encriptacion.VALOR_PARAMETRO_ESPECIFICO.getBytes(StandardCharsets.UTF_8));
 
-            byte[] decodificar = Base64.decode(peticion.getBytes());
+            byte[] decodificar = Base64.decode(peticion.getBytes(StandardCharsets.UTF_8));
             cifrar.init(Cipher.DECRYPT_MODE, especificaciones, parametro);
 
             byte[] descifrar = cifrar.doFinal(decodificar);
-            String resultado = new String(descifrar);
+            String resultado = new String(descifrar, StandardCharsets.UTF_8);
+
+            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, ValidarInformacionModel.class);

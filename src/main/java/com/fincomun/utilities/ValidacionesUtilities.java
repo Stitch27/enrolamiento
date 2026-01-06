@@ -98,11 +98,21 @@ public class ValidacionesUtilities {
 
     public static String limpiar_campo(String valor) {
 
-        String normalizar = Normalizer.normalize(valor, Normalizer.Form.NFD);
+        valor = valor.replace("ñ", "__ENIE_MIN__")
+                .replace("Ñ", "__ENIE_MAY__")
+                .replace("ü", "__U_DIERESIS_MIN__")
+                .replace("Ü", "__U_DIERESIS_MAY__");
 
-        String eliminar_acentos = normalizar.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        String normalizado = Normalizer.normalize(valor, Normalizer.Form.NFD);
 
-        return eliminar_acentos.toUpperCase();
+        normalizado = normalizado.replaceAll("\\p{M}", "");
+
+        normalizado = normalizado.replace("__ENIE_MIN__", "ñ")
+                .replace("__ENIE_MAY__", "Ñ")
+                .replace("__U_DIERESIS_MIN__", "ü")
+                .replace("__U_DIERESIS_MAY__", "Ü");
+
+        return normalizado.toUpperCase();
 
     }
 

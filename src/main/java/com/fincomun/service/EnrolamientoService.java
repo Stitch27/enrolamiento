@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import lombok.extern.slf4j.Slf4j;
 import com.fincomun.model.TokenModel;
 import com.fincomun.model.ClienteModel;
+import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpStatus;
 import com.fincomun.model.ResultadoIneModel;
 import com.fincomun.model.BitacoraFechaModel;
@@ -1768,7 +1769,10 @@ public class EnrolamientoService {
 
             }
 
-            servicios.servicio_enviar_mensaje(PropiedadesUtilities.Variables.VALOR_VALIDACION_CAMPO_GENERO, peticion.getTelefono_celular().trim());
+            String mensaje = PropiedadesUtilities.Variables.VALOR_VALIDACION_CAMPO_GENERO;
+            mensaje = new String(mensaje.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+            servicios.servicio_enviar_mensaje(mensaje, peticion.getTelefono_celular().trim());
 
             resultado.put("codigo", 122);
             resultado.put("descripcion", "Género del cliente inconsistente.");
