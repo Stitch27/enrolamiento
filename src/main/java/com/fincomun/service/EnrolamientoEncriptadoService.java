@@ -66,11 +66,6 @@ public class EnrolamientoEncriptadoService {
 
         }
 
-        log.info("SOLICITUD ENCRIPTADA");
-        log.info(solicitud);
-        log.info("");
-        log.info("");
-
         ValidarInformacionModel peticion = solicitud_validar_informacion(solicitud);
 
         if (Objects.isNull(peticion)) {
@@ -2990,8 +2985,6 @@ public class EnrolamientoEncriptadoService {
             byte[] descifrar = cifrar.doFinal(decodificar);
             String resultado = new String(descifrar, StandardCharsets.UTF_8);
 
-            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, ValidarDatosIneModel.class);
 
@@ -3022,8 +3015,6 @@ public class EnrolamientoEncriptadoService {
 
             byte[] descifrar = cifrar.doFinal(decodificar);
             String resultado = new String(descifrar, StandardCharsets.UTF_8);
-
-            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, ValidarDatosCurpModel.class);
@@ -3056,8 +3047,6 @@ public class EnrolamientoEncriptadoService {
             byte[] descifrar = cifrar.doFinal(decodificar);
             String resultado = new String(descifrar, StandardCharsets.UTF_8);
 
-            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, RegistrarBitacoraModel.class);
 
@@ -3088,8 +3077,6 @@ public class EnrolamientoEncriptadoService {
 
             byte[] descifrar = cifrar.doFinal(decodificar);
             String resultado = new String(descifrar, StandardCharsets.UTF_8);
-
-            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, BitacoraIncodeModel.class);
@@ -3122,8 +3109,6 @@ public class EnrolamientoEncriptadoService {
             byte[] descifrar = cifrar.doFinal(decodificar);
             String resultado = new String(descifrar, StandardCharsets.UTF_8);
 
-            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, AvisoContratoModel.class);
 
@@ -3154,8 +3139,6 @@ public class EnrolamientoEncriptadoService {
 
             byte[] descifrar = cifrar.doFinal(decodificar);
             String resultado = new String(descifrar, StandardCharsets.UTF_8);
-
-            resultado = new String(resultado.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
             ObjectMapper mapeador = new ObjectMapper();
             return mapeador.readValue(resultado, ValidarInformacionModel.class);

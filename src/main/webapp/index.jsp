@@ -64,7 +64,7 @@
         <div class="container">
 
             <h1>Proyecto Enrolamiento Digital</h1>
-            <h2>Version 1.1.0</h2>
+            <h2>Version 1.2.0</h2>
 
             <div class="info">
                 <p><span class="label">Fecha:</span> <%= fecha%></p>
