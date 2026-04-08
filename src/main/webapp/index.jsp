@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.text.SimpleDateFormat, java.util.Date" %>
+<%@ page import="java.time.ZonedDateTime, java.time.format.DateTimeFormatter, java.time.ZoneId" %>
 
 <%
-    String fecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    String fecha = ZonedDateTime.now(ZoneId.of("America/Mexico_City")).format(formatter);
 %>
 
 <!DOCTYPE html>
@@ -64,7 +65,7 @@
         <div class="container">
 
             <h1>Proyecto Enrolamiento Digital</h1>
-            <h2>Version 1.2.0</h2>
+            <h2>Version 1.3.0</h2>
 
             <div class="info">
                 <p><span class="label">Fecha:</span> <%= fecha%></p>

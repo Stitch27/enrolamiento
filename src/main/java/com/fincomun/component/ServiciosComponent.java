@@ -201,7 +201,8 @@ public class ServiciosComponent {
         HttpClient cliente = HttpClientBuilder.create().setDefaultRequestConfig(configuracion).build();
 
         HttpPost operacion = new HttpPost(PropiedadesUtilities.Variables.VALOR_DIRECCION_SERVICIO_VALIDAR_INE);
-        operacion.addHeader("Content-Type", PropiedadesUtilities.Variables.VALOR_CABECERA_SERVICIOS);
+        operacion.addHeader("Content-Type", "application/json; charset=UTF-8");
+        operacion.setHeader("Accept", "application/json");
 
         JSONObject datos_portal = new JSONObject();
         datos_portal.put("identificador", PropiedadesUtilities.Variables.VALOR_IDENTIFICADOR_SERVICIO_VALIDAR_CURP_INE_ENROLAMIENTO);
@@ -230,8 +231,9 @@ public class ServiciosComponent {
 
         try {
 
-            StringEntity entidad = new StringEntity(peticion.toString());
+            StringEntity entidad = new StringEntity(peticion.toString(), StandardCharsets.UTF_8);
 
+            entidad.setContentType("application/json");
             operacion.setEntity(entidad);
 
             HttpResponse respuesta = cliente.execute(operacion);

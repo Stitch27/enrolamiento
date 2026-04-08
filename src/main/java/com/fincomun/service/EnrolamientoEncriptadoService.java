@@ -2508,8 +2508,8 @@ public class EnrolamientoEncriptadoService {
         log.info("NUMERO EMISION: " + peticion.getN_emision());
         log.info("CODIGO DE IDENTIFICACION: " + peticion.getC_identificacion());
         log.info("CLAVE DE ELECTOR: " + peticion.getC_elector());
-        log.info("APELLIDO PATERNO: " + peticion.getC_identificacion());
-        log.info("APELLIDO MATERNO: " + peticion.getC_identificacion());
+        log.info("APELLIDO PATERNO: " + peticion.getA_paterno());
+        log.info("APELLIDO MATERNO: " + peticion.getA_materno());
         log.info("RECONOCIMIENTO OPTICO: " + peticion.getOcr());
         log.info("FOLIO: " + peticion.getFolio());
         log.info("TOKEN: " + peticion.getTokenJwt());

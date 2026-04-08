@@ -32,3 +32,11 @@ nb-configuration.xml
 
 ### VS Code ###
 .vscode/
+
+# Archivos basura de editores
+*~
+*.original
+*.original~
+*.bak
+*.swp
+*.orig
